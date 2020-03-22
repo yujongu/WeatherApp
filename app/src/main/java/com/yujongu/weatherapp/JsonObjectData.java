@@ -1,17 +1,16 @@
 package com.yujongu.weatherapp;
 
-public class JsonObjectData { 
+public class JsonObjectData {
     String main;
     String description;
     String icon;
     double temp;
     String name;
     String country;
+    String sexy;
 
     public JsonObjectData() {
     }
-
-
 
     public String getMain() {
         return main;
