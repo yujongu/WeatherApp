@@ -1,18 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:app = "http://schemas.android.com/apk/res-auto"
-    xmlns:tools = "http://schemas.android.com/tools"
-    android:layout_width = "match_parent"
-    android:layout_height = "match_parent"
-    tools:context = ".MainActivity">
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools = "http://schemas.android.com/tools">
+    <data>
+        <variable
+            name = "activity"
+            type = "com.yujongu.weatherapp.MainActivity" />
+    </data>
 
-    <TextView
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Hello World!"
-        app:layout_constraintBottom_toBottomOf = "parent"
-        app:layout_constraintLeft_toLeftOf = "parent"
-        app:layout_constraintRight_toRightOf = "parent"
-        app:layout_constraintTop_toTopOf = "parent" />
+    <RelativeLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        tools:context = ".MainActivity"
+        android:layout_margin="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/llTopBar"
+            android:layout_marginBottom="8dp"
+            android:gravity="end">
+            <EditText
+                android:layout_width = "0dp"
+                android:layout_weight="1"
+                android:id="@+id/etCitySearch"
+                android:layout_height = "wrap_content"
+                android:visibility="invisible"/>
+            <ImageButton
+                android:src="@drawable/searchimg"
+                android:contentDescription="Search City with Name"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnSearchCity"
+                android:padding="8dp"
+                android:layout_width = "50dp"
+                android:layout_height = "50dp"/>
+
+            <Button
+                android:layout_width = "80dp"
+                android:layout_height = "wrap_content"
+                android:text="settings"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text="CITYNAME"
+            android:textSize="26sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/llTopBar"
+            android:id="@+id/tvCityName"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tvCityName"
+            android:text="TEMP°"
+            android:textSize="46sp"/>
+
+
+
+    </RelativeLayout>
+</layout>
