@@ -7,7 +7,6 @@ public class JsonObjectData {
     double temp;
     String name;
     String country;
-    String sexy;
 
     public JsonObjectData() {
     }
