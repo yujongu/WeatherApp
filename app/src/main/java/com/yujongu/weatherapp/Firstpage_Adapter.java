@@ -58,9 +58,6 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-
-
-
         String url = "http://openweathermap.org/img/wn/" + firstpage_dataArrayList.get(position).getImageview_weather() + "@2x.png";
         Picasso.get().load(url).into(viewholder.imageview_weather);
 

@@ -94,6 +94,13 @@ public class Firstpage extends AppCompatActivity {
         binding.recyclerviewFirstpage.setLayoutManager(mLinearLayoutManager);
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
+
+        nameArrayList = loadData();
+        if (!nameArrayList.isEmpty()){
+            for (String name : nameArrayList){
+                sentJsonRequest(name);
+            }
+        }
     }
 
 
@@ -133,6 +140,10 @@ public class Firstpage extends AppCompatActivity {
 
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp());
                     mArrayList.add(data);
+                    if (!nameArrayList.contains(name)){
+                        nameArrayList.add(name);
+                        saveData(nameArrayList);
+                    }
                     mAdapter.notifyDataSetChanged();
 
                 }catch (JSONException e){
@@ -259,6 +270,9 @@ public class Firstpage extends AppCompatActivity {
                         deleted = mArrayList.get(position);
                         mArrayList.remove(position);
                         mAdapter.notifyItemRemoved(position);
+
+                        nameArrayList.remove(deleted.getCity());
+                        saveData(nameArrayList);
                         break;
                 }
             }
