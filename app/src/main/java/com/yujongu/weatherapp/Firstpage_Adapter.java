@@ -8,7 +8,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -19,11 +22,13 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
     private ArrayList<Firstpage_Data> firstpage_dataArrayList;
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
+        protected ImageView imageview_weather;
         protected TextView textview_city;
         protected TextView textView_temperature;
 
         public CustomViewHolder(View v){
             super(v);
+            this.imageview_weather = v.findViewById(R.id.weatherImage);
             this.textview_city = v.findViewById(R.id.textview_city);
             this.textView_temperature = v.findViewById(R.id.textview_temperature);
         }
@@ -43,6 +48,10 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
+
+
+        String url = "http://openweathermap.org/img/wn/" + firstpage_dataArrayList.get(position).getImageview_weather() + "@2x.png";
+        Picasso.get().load(url).into(viewholder.imageview_weather);
 
         viewholder.textview_city.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 

@@ -127,12 +127,10 @@ public class Firstpage extends AppCompatActivity {
                     double temp = jsonMain.getDouble("temp");
                     jsonData.setTemp(temp);
 
-                    Toast.makeText(Firstpage.this, jsonData.getName() + "   " + jsonData.getTemp() + "°C", Toast.LENGTH_SHORT).show();
-
-
-                    Firstpage_Data data = new Firstpage_Data(jsonData.getName(), jsonData.getTemp());
+                    Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp());
                     mArrayList.add(data);
                     mAdapter.notifyDataSetChanged();
+
 
                 }catch (JSONException e){
                     e.printStackTrace();
