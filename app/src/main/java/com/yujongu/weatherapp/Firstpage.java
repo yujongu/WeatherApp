@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,18 +30,22 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yujongu.weatherapp.databinding.ActivityFirstpageBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Firstpage extends AppCompatActivity {
 
     ArrayList<Firstpage_Data> mArrayList;
+    ArrayList<String> nameArrayList;
     Firstpage_Adapter mAdapter;
     Firstpage_Data deleted = null;
     AutocompleteSupportFragment autocompleteFragment;
@@ -77,7 +82,11 @@ public class Firstpage extends AppCompatActivity {
         PlacesClient placesClient = Places.createClient(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mArrayList = new ArrayList<>();
-        mAdapter = new Firstpage_Adapter( mArrayList);
+        loadData();
+        mAdapter = new Firstpage_Adapter(mArrayList);
+        for(int i =0; i<nameArrayList.size(); i++){
+            sentJsonRequest(nameArrayList.get(i));
+        }
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerviewFirstpage.getContext(),
                 mLinearLayoutManager.getOrientation());
         binding.recyclerviewFirstpage.addItemDecoration(dividerItemDecoration);
@@ -89,6 +98,7 @@ public class Firstpage extends AppCompatActivity {
         binding.recyclerviewFirstpage.setLayoutManager(mLinearLayoutManager);
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
+
     }
 
 
@@ -132,7 +142,10 @@ public class Firstpage extends AppCompatActivity {
 
                     Firstpage_Data data = new Firstpage_Data(jsonData.getName(), jsonData.getTemp());
                     mArrayList.add(data);
+                    nameArrayList.add(jsonData.getName());
                     mAdapter.notifyDataSetChanged();
+                    System.out.println(nameArrayList);
+                    saveData();
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -162,8 +175,6 @@ public class Firstpage extends AppCompatActivity {
 
                         //얘내들을 sentJsonRequest onResponse에 넣어주면 되고.
 
-
-
                         searchedCity = "";
                         autocompleteFragment.setText("");
 
@@ -175,6 +186,20 @@ public class Firstpage extends AppCompatActivity {
         }
     };
 
+    private void saveData() {
+        SharedPreferences pref = getSharedPreferences(, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("name", );
+        editor.apply();
+    }
+
+    private void loadData(){
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        pref.getString("name", null);
+        if(nameArrayList == null){
+            nameArrayList = new ArrayList<>();
+        }
+    }
 
 
     private void setupAutocompleteFrag(){
