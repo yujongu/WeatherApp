@@ -31,6 +31,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.yujongu.weatherapp.databinding.ActivityFirstpageBinding;
 
@@ -52,7 +53,7 @@ public class Firstpage extends AppCompatActivity {
     ActivityFirstpageBinding binding;
     String TAG = "FirstPageT";
     String searchedCity = "";
-
+    SharedPreferences pref;
     LinearLayoutManager mLinearLayoutManager;
 
     RequestQueue rq;
@@ -73,6 +74,8 @@ public class Firstpage extends AppCompatActivity {
 
 
     private void initInstances(){
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
+
         rq = Volley.newRequestQueue(this);
 
         if (!Places.isInitialized()){
@@ -82,11 +85,8 @@ public class Firstpage extends AppCompatActivity {
         PlacesClient placesClient = Places.createClient(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mArrayList = new ArrayList<>();
-        loadData();
         mAdapter = new Firstpage_Adapter(mArrayList);
-        for(int i =0; i<nameArrayList.size(); i++){
-            sentJsonRequest(nameArrayList.get(i));
-        }
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerviewFirstpage.getContext(),
                 mLinearLayoutManager.getOrientation());
         binding.recyclerviewFirstpage.addItemDecoration(dividerItemDecoration);
@@ -137,15 +137,10 @@ public class Firstpage extends AppCompatActivity {
                     double temp = jsonMain.getDouble("temp");
                     jsonData.setTemp(temp);
 
-                    Toast.makeText(Firstpage.this, jsonData.getName() + "   " + jsonData.getTemp() + "°C", Toast.LENGTH_SHORT).show();
-
-
                     Firstpage_Data data = new Firstpage_Data(jsonData.getName(), jsonData.getTemp());
                     mArrayList.add(data);
-                    nameArrayList.add(jsonData.getName());
+
                     mAdapter.notifyDataSetChanged();
-                    System.out.println(nameArrayList);
-                    saveData();
 
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -169,11 +164,8 @@ public class Firstpage extends AppCompatActivity {
                 case R.id.imagebutton_add:
                     if (!searchedCity.equals("")){
 
-                        //데이터를 날씨 데이터 저장해서 mArrayList에 추가해주면 됨.
                        sentJsonRequest(searchedCity);
 
-
-                        //얘내들을 sentJsonRequest onResponse에 넣어주면 되고.
 
                         searchedCity = "";
                         autocompleteFragment.setText("");
@@ -186,19 +178,34 @@ public class Firstpage extends AppCompatActivity {
         }
     };
 
-    private void saveData() {
-        SharedPreferences pref = getSharedPreferences(, MODE_PRIVATE);
+    private void saveData(ArrayList<String> arrayList) {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putString("name", );
+        JSONArray jsonArray = new JSONArray();
+        for (String names : arrayList){
+            jsonArray.put(names);
+        }
+        if (!arrayList.isEmpty()){
+            editor.putString("nameList", jsonArray.toString());
+        } else {
+            editor.putString("nameList", null);
+        }
         editor.apply();
     }
 
-    private void loadData(){
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        pref.getString("name", null);
-        if(nameArrayList == null){
-            nameArrayList = new ArrayList<>();
+    private ArrayList<String> loadData(){
+        String json = pref.getString("nameList", null);
+        ArrayList<String> nameList = new ArrayList();
+        if (json != null){
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i = 0; i < jsonArray.length(); i++){
+                    nameList.add((String) jsonArray.get(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+        return nameList;
     }
 
 
