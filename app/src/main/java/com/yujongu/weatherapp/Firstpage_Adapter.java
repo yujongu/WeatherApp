@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.CustomViewHolder> {
@@ -18,10 +20,12 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
         protected TextView textview_city;
+        protected TextView textView_temperature;
 
         public CustomViewHolder(View v){
             super(v);
             this.textview_city = v.findViewById(R.id.textview_city);
+            this.textView_temperature = v.findViewById(R.id.textview_temperature);
         }
 
     }
@@ -45,6 +49,12 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         viewholder.textview_city.setGravity(Gravity.CENTER);
 
         viewholder.textview_city.setText(firstpage_dataArrayList.get(position).getCity());
+
+        viewholder.textView_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+
+        viewholder.textView_temperature.setGravity(Gravity.CENTER);
+
+        viewholder.textView_temperature.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperature()));
 
     }
 

@@ -129,6 +129,11 @@ public class Firstpage extends AppCompatActivity {
 
                     Toast.makeText(Firstpage.this, jsonData.getName() + "   " + jsonData.getTemp() + "°C", Toast.LENGTH_SHORT).show();
 
+
+                    Firstpage_Data data = new Firstpage_Data(jsonData.getName(), jsonData.getTemp());
+                    mArrayList.add(data);
+                    mAdapter.notifyDataSetChanged();
+
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -152,12 +157,11 @@ public class Firstpage extends AppCompatActivity {
                     if (!searchedCity.equals("")){
 
                         //데이터를 날씨 데이터 저장해서 mArrayList에 추가해주면 됨.
-                        sentJsonRequest(searchedCity);
+                       sentJsonRequest(searchedCity);
+
 
                         //얘내들을 sentJsonRequest onResponse에 넣어주면 되고.
-                        Firstpage_Data data = new Firstpage_Data(searchedCity);
-                        mArrayList.add(data);
-                        mAdapter.notifyDataSetChanged();
+
 
 
                         searchedCity = "";
