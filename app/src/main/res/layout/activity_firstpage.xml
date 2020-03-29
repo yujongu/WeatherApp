@@ -5,7 +5,7 @@
     <data>
         <variable
             name = "activity"
-            type = "com.yujongu.weatherapp.Firstpage" />
+            type = "com.yujongu.weatherapp.Firstpage"/>
     </data>
 
     <LinearLayout
