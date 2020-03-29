@@ -77,7 +77,7 @@ public class Firstpage extends AppCompatActivity {
         PlacesClient placesClient = Places.createClient(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mArrayList = new ArrayList<>();
-        mAdapter = new Firstpage_Adapter( mArrayList);
+        mAdapter = new Firstpage_Adapter(mArrayList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerviewFirstpage.getContext(),
                 mLinearLayoutManager.getOrientation());
         binding.recyclerviewFirstpage.addItemDecoration(dividerItemDecoration);
@@ -95,7 +95,6 @@ public class Firstpage extends AppCompatActivity {
     public void sentJsonRequest(String name){
         String cityName = name;
         String url = "http://api.openweathermap.org/data/2.5/weather?"
-
                 + "appid=" + OpenWeatherAppKey.OPEN_WEATHER_APP_KEY
                 + "&q=" + cityName
                 + "&units=metric";
@@ -140,40 +139,51 @@ public class Firstpage extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                Toast.makeText(Firstpage.this, "Sorry we couldn't find the weather for the city...", Toast.LENGTH_LONG).show();
             }
         });
         rq.add(jsonObjectRequest);
     }
-
-
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.imagebutton_add:
-                    if (!searchedCity.equals("")){
-
-                        //데이터를 날씨 데이터 저장해서 mArrayList에 추가해주면 됨.
-                       sentJsonRequest(searchedCity);
-
-
-                        //얘내들을 sentJsonRequest onResponse에 넣어주면 되고.
-
-
+                    int index = isPresent(searchedCity);
+                    if (index != -1){
+                        mAdapter.presentInt = index;
+                        mAdapter.notifyDataSetChanged();
 
                         searchedCity = "";
                         autocompleteFragment.setText("");
 
                     } else {
-                        Toast.makeText(Firstpage.this, "Please search a city name", Toast.LENGTH_SHORT).show();
+                        if (!searchedCity.equals("")){
+
+                            sentJsonRequest(searchedCity);
+
+                            searchedCity = "";
+                            autocompleteFragment.setText("");
+
+                        } else {
+                            Toast.makeText(Firstpage.this, "Please search a city name", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                     break;
             }
         }
     };
 
-
+    private int isPresent(String city){
+        for (int i = 0; i < mArrayList.size(); i++){
+            if (mArrayList.get(i).getCity().equals(city)){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     private void setupAutocompleteFrag(){
         // Initialize the AutocompleteSupportFragment.
@@ -234,9 +244,5 @@ public class Firstpage extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(binding.recyclerviewFirstpage);
     }
-
-
-
-
 
 }

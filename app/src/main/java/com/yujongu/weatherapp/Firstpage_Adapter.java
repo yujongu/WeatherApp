@@ -3,13 +3,19 @@ package com.yujongu.weatherapp;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +26,8 @@ import java.util.ArrayList;
 public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.CustomViewHolder> {
 
     private ArrayList<Firstpage_Data> firstpage_dataArrayList;
+
+    int presentInt = -1;
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
         protected ImageView imageview_weather;
@@ -32,7 +40,6 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
             this.textview_city = v.findViewById(R.id.textview_city);
             this.textView_temperature = v.findViewById(R.id.textview_temperature);
         }
-
     }
 
     public Firstpage_Adapter(ArrayList <Firstpage_Data> firstpage_dataArrayList){
@@ -43,15 +50,21 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType){
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.firstpage_list,viewGroup,false);
         CustomViewHolder viewHolder = new CustomViewHolder(v);
+        viewHolder.itemView.setBackgroundColor(Color.WHITE);
         return viewHolder;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
 
+
+
         String url = "http://openweathermap.org/img/wn/" + firstpage_dataArrayList.get(position).getImageview_weather() + "@2x.png";
         Picasso.get().load(url).into(viewholder.imageview_weather);
+
+        viewholder.itemView.setElevation(2);
 
         viewholder.textview_city.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 
@@ -65,6 +78,14 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
         viewholder.textView_temperature.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperature()));
 
+        if (position == presentInt){
+            System.out.println(presentInt);
+            ObjectAnimator anim = ObjectAnimator.ofObject(viewholder.itemView, "backgroundColor", new ArgbEvaluator(),
+                    Color.LTGRAY, Color.WHITE);
+            anim.setDuration(2000);
+            anim.start();
+            presentInt = -1;
+        }
     }
 
     @Override
