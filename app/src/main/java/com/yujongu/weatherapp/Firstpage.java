@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,25 +30,30 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 import com.yujongu.weatherapp.databinding.ActivityFirstpageBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Firstpage extends AppCompatActivity {
 
     ArrayList<Firstpage_Data> mArrayList;
+    ArrayList<String> nameArrayList;
     Firstpage_Adapter mAdapter;
     Firstpage_Data deleted = null;
     AutocompleteSupportFragment autocompleteFragment;
     ActivityFirstpageBinding binding;
     String TAG = "FirstPageT";
     String searchedCity = "";
-
+    SharedPreferences pref;
     LinearLayoutManager mLinearLayoutManager;
 
     RequestQueue rq;
@@ -68,6 +74,8 @@ public class Firstpage extends AppCompatActivity {
 
 
     private void initInstances(){
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
+
         rq = Volley.newRequestQueue(this);
 
         if (!Places.isInitialized()){
@@ -130,7 +138,6 @@ public class Firstpage extends AppCompatActivity {
                     mArrayList.add(data);
                     mAdapter.notifyDataSetChanged();
 
-
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
@@ -170,7 +177,6 @@ public class Firstpage extends AppCompatActivity {
                             Toast.makeText(Firstpage.this, "Please search a city name", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     break;
             }
         }
@@ -184,6 +190,36 @@ public class Firstpage extends AppCompatActivity {
         }
         return -1;
     }
+    private void saveData(ArrayList<String> arrayList) {
+        SharedPreferences.Editor editor = pref.edit();
+        JSONArray jsonArray = new JSONArray();
+        for (String names : arrayList){
+            jsonArray.put(names);
+        }
+        if (!arrayList.isEmpty()){
+            editor.putString("nameList", jsonArray.toString());
+        } else {
+            editor.putString("nameList", null);
+        }
+        editor.apply();
+    }
+
+    private ArrayList<String> loadData(){
+        String json = pref.getString("nameList", null);
+        ArrayList<String> nameList = new ArrayList();
+        if (json != null){
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i = 0; i < jsonArray.length(); i++){
+                    nameList.add((String) jsonArray.get(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return nameList;
+    }
+
 
     private void setupAutocompleteFrag(){
         // Initialize the AutocompleteSupportFragment.
