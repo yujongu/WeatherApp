@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +49,7 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         this.firstpage_dataArrayList = firstpage_dataArrayList;
     }
 
+
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType){
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.firstpage_list,viewGroup,false);
@@ -56,7 +60,7 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder viewholder, int position) {
 
         String url = "http://openweathermap.org/img/wn/" + firstpage_dataArrayList.get(position).getImageview_weather() + "@2x.png";
         Picasso.get().load(url).into(viewholder.imageview_weather);
@@ -82,7 +86,17 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
             anim.setDuration(2000);
             anim.start();
             presentInt = -1;
+
         }
+
+        viewholder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Context context = v.getContext();
+                Intent intent = new Intent(context, DetailsActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
