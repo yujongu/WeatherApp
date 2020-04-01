@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,13 +37,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class Firstpage extends AppCompatActivity {
 
     ArrayList<Firstpage_Data> mArrayList;
-    ArrayList<String> nameArrayList;
+    HashMap<String, Integer> nameArrayList;
     Firstpage_Adapter mAdapter;
     Firstpage_Data deleted = null;
     AutocompleteSupportFragment autocompleteFragment;
@@ -79,7 +83,10 @@ public class Firstpage extends AppCompatActivity {
 
         PlacesClient placesClient = Places.createClient(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
+        nameArrayList = loadData();
+
         mArrayList = new ArrayList<>();
+
         mAdapter = new Firstpage_Adapter(mArrayList);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.recyclerviewFirstpage.getContext(),
                 mLinearLayoutManager.getOrientation());
@@ -93,16 +100,16 @@ public class Firstpage extends AppCompatActivity {
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
 
-        nameArrayList = loadData();
+
         if (!nameArrayList.isEmpty()){
-            for (String name : nameArrayList){
-                sentJsonRequest(name);
+            for (Map.Entry<String, Integer> entry : nameArrayList.entrySet()){
+                sentJsonRequest(entry.getKey(), entry.getValue());
             }
         }
     }
 
 
-    public void sentJsonRequest(String name){
+    public void sentJsonRequest(String name, final int index){
         String cityName = name;
         String url = "http://api.openweathermap.org/data/2.5/weather?"
                 + "appid=" + OpenWeatherAppKey.OPEN_WEATHER_APP_KEY
@@ -152,11 +159,20 @@ public class Firstpage extends AppCompatActivity {
 
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp(), jsonData.getCountry(),
                             jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin());
-                    mArrayList.add(data);
-                    if (!nameArrayList.contains(name)){
-                        nameArrayList.add(name);
+                    if (index != -1){
+                        if (mArrayList.size() > index){
+                            mArrayList.add(index, data);
+                        } else {
+                            mArrayList.add(data);
+                        }
+                    } else {
+                        mArrayList.add(data);
+                    }
+                    if (!nameArrayList.containsKey(name)){
+                        nameArrayList.put(name, nameArrayList.size());
                         saveData(nameArrayList);
                     }
+
                     mAdapter.notifyDataSetChanged();
 
                 }catch (JSONException e){
@@ -189,7 +205,7 @@ public class Firstpage extends AppCompatActivity {
                     } else {
                         if (!searchedCity.equals("")){
 
-                            sentJsonRequest(searchedCity);
+                            sentJsonRequest(searchedCity, -1);
 
                             searchedCity = "";
                             autocompleteFragment.setText("");
@@ -211,11 +227,11 @@ public class Firstpage extends AppCompatActivity {
         }
         return -1;
     }
-    private void saveData(ArrayList<String> arrayList) {
+    private void saveData(HashMap<String, Integer> arrayList) {
         SharedPreferences.Editor editor = pref.edit();
         JSONArray jsonArray = new JSONArray();
-        for (String names : arrayList){
-            jsonArray.put(names);
+        for (Map.Entry<String, Integer> entry : arrayList.entrySet()){
+            jsonArray.put(entry.getKey());
         }
         if (!arrayList.isEmpty()){
             editor.putString("nameList", jsonArray.toString());
@@ -225,14 +241,14 @@ public class Firstpage extends AppCompatActivity {
         editor.apply();
     }
 
-    private ArrayList<String> loadData(){
+    private HashMap<String, Integer> loadData(){
         String json = pref.getString("nameList", null);
-        ArrayList<String> nameList = new ArrayList();
+        HashMap<String, Integer> nameList = new HashMap<>();
         if (json != null){
             try {
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++){
-                    nameList.add((String) jsonArray.get(i));
+                    nameList.put((String) jsonArray.get(i), i);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
