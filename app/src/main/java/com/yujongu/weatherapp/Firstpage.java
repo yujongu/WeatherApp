@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -139,8 +141,8 @@ public class Firstpage extends AppCompatActivity {
                     int humidity = jsonMain.getInt("humidity");
                     jsonData.setHumidity(humidity);
 
-                    JSONObject jsonWind = response.getJSONObject("wind");
-                    double windspeed = jsonWind.getDouble("speed");
+                    JSONObject wind = response.getJSONObject("wind");
+                    double windspeed = wind.getDouble("speed");
                     jsonData.setWindspeed(windspeed);
 
                     double max = jsonMain.getDouble("temp_max");
@@ -150,8 +152,9 @@ public class Firstpage extends AppCompatActivity {
                     jsonData.setMin(min);
 
 
+
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp(), jsonData.getCountry(),
-                            jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin());
+                            jsonData.getMain(),jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin());
                     mArrayList.add(data);
                     if (!nameArrayList.contains(name)){
                         nameArrayList.add(name);
@@ -249,7 +252,7 @@ public class Firstpage extends AppCompatActivity {
 
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-        autocompleteFragment.setTypeFilter(TypeFilter.REGIONS);
+        autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
 
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
