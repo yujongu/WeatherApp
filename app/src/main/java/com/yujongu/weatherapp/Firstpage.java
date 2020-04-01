@@ -143,10 +143,10 @@ public class Firstpage extends AppCompatActivity {
                     double windspeed = jsonWind.getDouble("speed");
                     jsonData.setWindspeed(windspeed);
 
-                    double max = jsonMain.getDouble("max");
+                    double max = jsonMain.getDouble("temp_max");
                     jsonData.setMax(max);
 
-                    double min = jsonMain.getDouble("min");
+                    double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
 
 

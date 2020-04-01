@@ -145,8 +145,8 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
                 intent.putExtra("main", main);
                 intent.putExtra("humidity", humidity);
                 intent.putExtra("windspeed", windspeed);
-                intent.putExtra("max", max);
-                intent.putExtra("min", min);
+                intent.putExtra("temp_max", max);
+                intent.putExtra("temp_min", min);
 
                 context.startActivity(intent);
             }

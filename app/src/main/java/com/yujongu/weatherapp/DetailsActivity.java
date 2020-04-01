@@ -82,10 +82,10 @@ public class DetailsActivity extends AppCompatActivity {
         windspeed = intent.getStringExtra("windspeed");
         textview_detail_windspeed.setText(windspeed + "m/s");
 
-        max = intent.getStringExtra("max");
-        textview_detail_visibility.setText(max+ "°C");
+        max = intent.getStringExtra("temp_max");
+        textview_detail_max.setText(max+ "°C");
 
-        min = intent.getStringExtra("min");
+        min = intent.getStringExtra("temp_min");
         textview_detail_min.setText(min+ "°C");
 
 
