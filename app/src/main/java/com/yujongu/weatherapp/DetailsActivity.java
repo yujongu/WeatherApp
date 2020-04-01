@@ -87,9 +87,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         min = intent.getStringExtra("temp_min");
         textview_detail_min.setText(min+ "°C");
-
-
-
     }
 
 }
