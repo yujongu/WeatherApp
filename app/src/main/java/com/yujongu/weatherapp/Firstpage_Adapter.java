@@ -32,16 +32,33 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
     int presentInt = -1;
 
+
     public class CustomViewHolder extends RecyclerView.ViewHolder{
         protected ImageView imageview_weather;
         protected TextView textview_city;
-        protected TextView textView_temperature;
+        protected TextView textview_temperature;
+        protected TextView textview_country;
+        protected TextView textview_main;
+        protected TextView textview_doubletemp;
+        protected TextView textview_humidity;
+        protected TextView textview_windspeed;
+        protected TextView textview_max;
+        protected TextView textview_min;
+
 
         public CustomViewHolder(View v){
             super(v);
             this.imageview_weather = v.findViewById(R.id.weatherImage);
             this.textview_city = v.findViewById(R.id.textview_city);
-            this.textView_temperature = v.findViewById(R.id.textview_temperature);
+            this.textview_temperature = v.findViewById(R.id.textview_temperature);
+            this.textview_country = v.findViewById(R.id.textview_country);
+            this.textview_main = v.findViewById(R.id.textview_main);
+            this.textview_doubletemp = v.findViewById(R.id.textview_doubletemp);
+            this.textview_humidity = v.findViewById(R.id.textview_humidity);
+            this.textview_windspeed = v.findViewById(R.id.textview_windspeed);
+            this.textview_max = v.findViewById(R.id.textview_max);
+            this.textview_min = v.findViewById(R.id.textview_min);
+
         }
     }
 
@@ -73,11 +90,31 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
         viewholder.textview_city.setText(firstpage_dataArrayList.get(position).getCity());
 
-        viewholder.textView_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        viewholder.textview_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 
-        viewholder.textView_temperature.setGravity(Gravity.CENTER);
+        viewholder.textview_temperature.setGravity(Gravity.CENTER);
 
-        viewholder.textView_temperature.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperature()));
+        viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTemperature()));
+
+        viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperature()));
+
+        viewholder.textview_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+
+        viewholder.textview_temperature.setGravity(Gravity.CENTER);
+
+        viewholder.textview_country.setText(String.valueOf(firstpage_dataArrayList.get(position).getCountry()));
+
+        viewholder.textview_main.setText(String.valueOf(firstpage_dataArrayList.get(position).getMain()));
+
+        viewholder.textview_humidity.setText(String.valueOf(firstpage_dataArrayList.get(position).getHumidity()));
+
+        viewholder.textview_windspeed.setText(String.valueOf(firstpage_dataArrayList.get(position).getWindspeed()));
+
+        viewholder.textview_max.setText(String.valueOf(firstpage_dataArrayList.get(position).getMax()));
+
+        viewholder.textview_min.setText(String.valueOf(firstpage_dataArrayList.get(position).getMin()));
+
+
 
         if (position == presentInt){
             System.out.println(presentInt);
@@ -86,7 +123,6 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
             anim.setDuration(2000);
             anim.start();
             presentInt = -1;
-
         }
 
         viewholder.itemView.setOnClickListener(new View.OnClickListener(){
@@ -94,6 +130,24 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
             public void onClick(View v){
                 Context context = v.getContext();
                 Intent intent = new Intent(context, DetailsActivity.class);
+                String city = viewholder.textview_city.getText().toString();
+                String country = viewholder.textview_country.getText().toString();
+                String temperature = viewholder.textview_doubletemp.getText().toString();
+                String main = viewholder.textview_main.getText().toString();
+                String humidity = viewholder.textview_humidity.getText().toString();
+                String windspeed = viewholder.textview_windspeed.getText().toString();
+                String max = viewholder.textview_max.getText().toString();
+                String min = viewholder.textview_min.getText().toString();
+
+                intent.putExtra("city", city);
+                intent.putExtra("country", country);
+                intent.putExtra("temperature", temperature);
+                intent.putExtra("main", main);
+                intent.putExtra("humidity", humidity);
+                intent.putExtra("windspeed", windspeed);
+                intent.putExtra("max", max);
+                intent.putExtra("min", min);
+
                 context.startActivity(intent);
             }
         });

@@ -53,6 +53,52 @@
         android:id="@+id/c"
         />
 
+    <TextView
+        android:id="@+id/textview_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+
+    <TextView
+        android:id="@+id/textview_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+
+    <TextView
+        android:id="@+id/textview_doubletemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+
+    <TextView
+        android:id="@+id/textview_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+    <TextView
+        android:id="@+id/textview_windspeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+    <TextView
+        android:id="@+id/textview_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+    <TextView
+        android:id="@+id/textview_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        />
+
 
 
 </RelativeLayout>

@@ -7,8 +7,44 @@ public class JsonObjectData {
     double temp;
     String name;
     String country;
+    int humidity;
+    double windspeed;
+    double max;
+    double min;
+
+    public double getMax() {
+        return max;
+    }
+
+    public void setMax(double max) {
+        this.max = max;
+    }
+
+    public double getMin() {
+        return min;
+    }
+
+    public void setMin(double min) {
+        this.min = min;
+    }
 
     public JsonObjectData() {
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public double getWindspeed() {
+        return windspeed;
+    }
+
+    public void setWindspeed(double windspeed) {
+        this.windspeed = windspeed;
     }
 
     public String getMain() {
