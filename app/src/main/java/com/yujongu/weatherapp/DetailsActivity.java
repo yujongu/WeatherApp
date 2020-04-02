@@ -51,8 +51,7 @@ public class DetailsActivity extends AppCompatActivity {
         imagebutton_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailsActivity.this, Firstpage.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -101,8 +100,7 @@ public class DetailsActivity extends AppCompatActivity {
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
                 if(x1<x2){
-                    Intent intent = new Intent(DetailsActivity.this, Firstpage.class);
-                    startActivity(intent);
+                    finish();
                 }
                 break;
         }

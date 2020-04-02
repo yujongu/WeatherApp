@@ -11,6 +11,33 @@ public class Firstpage_Data {
     private double textview_windspeed;
     private double textview_max;
     private double textview_min;
+    private String inputCityName;
+    private double latitude;
+    private double longitude;
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getInputCityName() {
+        return inputCityName;
+    }
+
+    public void setInputCityName(String inputCityName) {
+        this.inputCityName = inputCityName;
+    }
 
     public double getMax() {
         return textview_max;
@@ -86,7 +113,7 @@ public class Firstpage_Data {
     }
 
     public Firstpage_Data(String weatherIcon, String textview_city, double textview_temperature, String country, String textview_main,
-                          int textview_humidity, double textview_windspeed, double textview_max, double textview_min){
+                          int textview_humidity, double textview_windspeed, double textview_max, double textview_min, double latitude, double longitude){
         this.imageview_weather = weatherIcon;
         this.textview_city = textview_city;
         this.textview_temperature = textview_temperature;
@@ -96,6 +123,8 @@ public class Firstpage_Data {
         this.textview_windspeed = textview_windspeed;
         this.textview_max = textview_max;
         this.textview_min = textview_min;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 

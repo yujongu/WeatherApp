@@ -88,7 +88,7 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
         viewholder.textview_city.setGravity(Gravity.CENTER);
 
-        viewholder.textview_city.setText(firstpage_dataArrayList.get(position).getCity());
+        viewholder.textview_city.setText(firstpage_dataArrayList.get(position).getInputCityName());
 
         viewholder.textview_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 
@@ -113,8 +113,6 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         viewholder.textview_max.setText(String.valueOf(firstpage_dataArrayList.get(position).getMax()));
 
         viewholder.textview_min.setText(String.valueOf(firstpage_dataArrayList.get(position).getMin()));
-
-
 
         if (position == presentInt){
             System.out.println(presentInt);

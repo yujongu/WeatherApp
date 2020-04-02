@@ -11,6 +11,8 @@ public class JsonObjectData {
     double windspeed;
     double max;
     double min;
+    double lat;
+    double lon;
 
     public double getMax() {
         return max;
@@ -93,5 +95,21 @@ public class JsonObjectData {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 }

@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -46,13 +48,14 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class Firstpage extends AppCompatActivity {
 
     ArrayList<Firstpage_Data> mArrayList;
-    HashMap<String, Integer> nameArrayList;
+    LinkedHashMap<String, LatLng> nSaveList;
     Firstpage_Adapter mAdapter;
     Firstpage_Data deleted = null;
     AutocompleteSupportFragment autocompleteFragment;
     ActivityFirstpageBinding binding;
     String TAG = "FirstPageT";
     String searchedCity = "";
+    LatLng searchedLatLng;
     SharedPreferences pref;
     LinearLayoutManager mLinearLayoutManager;
 
@@ -84,7 +87,8 @@ public class Firstpage extends AppCompatActivity {
 
         PlacesClient placesClient = Places.createClient(this);
         mLinearLayoutManager = new LinearLayoutManager(this);
-        nameArrayList = loadData();
+
+        nSaveList = loadData();
 
         mArrayList = new ArrayList<>();
 
@@ -103,20 +107,21 @@ public class Firstpage extends AppCompatActivity {
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
 
-
-        if (!nameArrayList.isEmpty()){
-            for (Map.Entry<String, Integer> entry : nameArrayList.entrySet()){
-                sentJsonRequest(entry.getKey(), entry.getValue());
+        if (!nSaveList.isEmpty()){
+            int ind = 0;
+            for (Map.Entry<String, LatLng> entry : nSaveList.entrySet()){
+                sentJsonRequest(entry.getKey(), entry.getValue(), ind);
+                ind++;
             }
         }
     }
 
 
-    public void sentJsonRequest(String name, final int index){
-        String cityName = name;
+    public void sentJsonRequest(final String inputName, final LatLng latLng, final int index){
         String url = "http://api.openweathermap.org/data/2.5/weather?"
                 + "appid=" + OpenWeatherAppKey.OPEN_WEATHER_APP_KEY
-                + "&q=" + cityName
+                + "&lat=" + latLng.latitude
+                + "&lon=" + latLng.longitude
                 + "&units=metric";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -130,6 +135,12 @@ public class Firstpage extends AppCompatActivity {
                     JSONObject sys = response.getJSONObject(("sys"));
                     String country = sys.getString("country");
                     jsonData.setCountry(country);
+
+                    JSONObject coord = response.getJSONObject("coord");
+                    double lat = coord.getDouble("lat");
+                    double lon = coord.getDouble("lon");
+                    jsonData.setLat(lat);
+                    jsonData.setLon(lon);
 
                     JSONArray weather = response.getJSONArray("weather");
                     JSONObject weatherObject = weather.getJSONObject(0);
@@ -159,9 +170,10 @@ public class Firstpage extends AppCompatActivity {
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
 
-
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp(), jsonData.getCountry(),
-                            jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin());
+                            jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin(), jsonData.getLat(), jsonData.getLon());
+                    data.setInputCityName(inputName);
+
                     if (index != -1){
                         if (mArrayList.size() > index){
                             mArrayList.add(index, data);
@@ -171,9 +183,10 @@ public class Firstpage extends AppCompatActivity {
                     } else {
                         mArrayList.add(data);
                     }
-                    if (!nameArrayList.containsKey(name)){
-                        nameArrayList.put(name, nameArrayList.size());
-                        saveData(nameArrayList);
+
+                    if (!nSaveList.containsKey(inputName)){
+                        nSaveList.put(inputName, latLng);
+                        saveData(nSaveList);
                     }
 
                     mAdapter.notifyDataSetChanged();
@@ -208,11 +221,12 @@ public class Firstpage extends AppCompatActivity {
                     } else {
                         if (!searchedCity.equals("")){
 
-                            sentJsonRequest(searchedCity, -1);
+//                            sentJsonRequest(searchedCity, -1);
+                            sentJsonRequest(searchedCity, searchedLatLng, -1);
 
                             searchedCity = "";
+                            searchedLatLng = null;
                             autocompleteFragment.setText("");
-
                         } else {
                             Toast.makeText(Firstpage.this, "Please search a city name", Toast.LENGTH_SHORT).show();
                         }
@@ -230,13 +244,15 @@ public class Firstpage extends AppCompatActivity {
         }
         return -1;
     }
-    private void saveData(HashMap<String, Integer> arrayList) {
+
+    private void saveData(LinkedHashMap<String, LatLng> map) {
         SharedPreferences.Editor editor = pref.edit();
         JSONArray jsonArray = new JSONArray();
-        for (Map.Entry<String, Integer> entry : arrayList.entrySet()){
+        for (Map.Entry<String, LatLng> entry : map.entrySet()){
             jsonArray.put(entry.getKey());
+            jsonArray.put(entry.getValue());
         }
-        if (!arrayList.isEmpty()){
+        if (!map.isEmpty()){
             editor.putString("nameList", jsonArray.toString());
         } else {
             editor.putString("nameList", null);
@@ -244,14 +260,22 @@ public class Firstpage extends AppCompatActivity {
         editor.apply();
     }
 
-    private HashMap<String, Integer> loadData(){
+    private LinkedHashMap<String, LatLng> loadData(){
         String json = pref.getString("nameList", null);
-        HashMap<String, Integer> nameList = new HashMap<>();
+        LinkedHashMap<String, LatLng> nameList = new LinkedHashMap<>();
         if (json != null){
             try {
                 JSONArray jsonArray = new JSONArray(json);
-                for (int i = 0; i < jsonArray.length(); i++){
-                    nameList.put((String) jsonArray.get(i), i);
+                for (int i = 0; i < jsonArray.length(); i+=2){
+                    String[] latlong =  jsonArray.get(i + 1).toString().split(",");
+                    latlong[0] = latlong[0].replace("lat/lng: (", "");
+                    latlong[1] = latlong[1].replace(")", "");
+
+                    double latitude = Double.parseDouble(latlong[0]);
+                    double longitude = Double.parseDouble(latlong[1]);
+                    LatLng hold = new LatLng(latitude, longitude);
+                    nameList.put((String) jsonArray.get(i), hold);
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -267,7 +291,7 @@ public class Firstpage extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.NAME, Place.Field.LAT_LNG));
         autocompleteFragment.setTypeFilter(TypeFilter.REGIONS);
 
         // Set up a PlaceSelectionListener to handle the response.
@@ -275,8 +299,8 @@ public class Firstpage extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
                 searchedCity = place.getName();
+                searchedLatLng = place.getLatLng();
             }
 
             @Override
@@ -299,6 +323,15 @@ public class Firstpage extends AppCompatActivity {
 
                 Collections.swap(mArrayList, fromPosition, toPosition);
                 recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+                nSaveList.clear();
+
+                for (int i = 0; i < mArrayList.size(); i++){
+                    nSaveList.put(mArrayList.get(i).getInputCityName(), new LatLng(mArrayList.get(i).getLatitude(), mArrayList.get(i).getLongitude()));
+                }
+
+                saveData(nSaveList);
+
                 return false;
             }
 
@@ -311,8 +344,8 @@ public class Firstpage extends AppCompatActivity {
                         mArrayList.remove(position);
                         mAdapter.notifyItemRemoved(position);
 
-                        nameArrayList.remove(deleted.getCity());
-                        saveData(nameArrayList);
+                        nSaveList.remove(deleted.getInputCityName());
+                        saveData(nSaveList);
                         break;
                 }
             }
