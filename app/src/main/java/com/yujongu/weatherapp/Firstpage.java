@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +94,8 @@ public class Firstpage extends AppCompatActivity {
         binding.recyclerviewFirstpage.addItemDecoration(dividerItemDecoration);
         rvItemTouchHelper();
         setupAutocompleteFrag();
+
+
     }
 
     private void eventListeners(){
@@ -284,10 +287,18 @@ public class Firstpage extends AppCompatActivity {
         });
     }
 
+
+
     private void rvItemTouchHelper(){
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,  ItemTouchHelper.LEFT) {
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP| ItemTouchHelper.DOWN
+                |ItemTouchHelper.START | ItemTouchHelper.END,  ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                Collections.swap(mArrayList, fromPosition, toPosition);
+                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
             }
 
