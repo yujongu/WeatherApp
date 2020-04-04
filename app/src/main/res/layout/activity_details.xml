@@ -19,7 +19,6 @@
         android:layout_weight="1"
         android:id="@+id/imagebutton_menu"
         android:padding="10dp"
-
         />
 
     <TextView

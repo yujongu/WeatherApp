@@ -4,7 +4,8 @@ public class Firstpage_Data {
 
     private String imageview_weather;
     private String textview_city;
-    private double textview_temperature;
+    private double textview_temperatureC;
+    private double textview_temperatureF;
     private String textview_country;
     private String textview_main;
     private int textview_humidity;
@@ -14,6 +15,7 @@ public class Firstpage_Data {
     private String inputCityName;
     private double latitude;
     private double longitude;
+
 
     public double getLatitude() {
         return latitude;
@@ -96,12 +98,20 @@ public class Firstpage_Data {
         this.imageview_weather = imageview_weather;
     }
 
-    public double getTemperature() {
-        return textview_temperature;
+    public double getTemperatureC() {
+        return textview_temperatureC;
     }
 
-    public void setTemperature(double textview_temperature) {
-        this.textview_temperature = textview_temperature;
+    public void setTemperatureC(double textview_temperatureC) {
+        this.textview_temperatureC = textview_temperatureC;
+    }
+
+    public double getTextview_temperatureF() {
+        return textview_temperatureF;
+    }
+
+    public void setTextview_temperatureF(double textview_temperatureF) {
+        this.textview_temperatureF = textview_temperatureF;
     }
 
     public String getCity() {
@@ -112,11 +122,12 @@ public class Firstpage_Data {
         this.textview_city = textview_city;
     }
 
-    public Firstpage_Data(String weatherIcon, String textview_city, double textview_temperature, String country, String textview_main,
+    public Firstpage_Data(String weatherIcon, String textview_city, double textview_temperatureC, double textview_temperatureF, String country, String textview_main,
                           int textview_humidity, double textview_windspeed, double textview_max, double textview_min, double latitude, double longitude){
         this.imageview_weather = weatherIcon;
         this.textview_city = textview_city;
-        this.textview_temperature = textview_temperature;
+        this.textview_temperatureC = textview_temperatureC;
+        this.textview_temperatureF = textview_temperatureF;
         this.textview_country = country;
         this.textview_main = textview_main;
         this.textview_humidity = textview_humidity;

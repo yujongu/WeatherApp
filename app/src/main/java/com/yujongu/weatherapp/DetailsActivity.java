@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    Firstpage firstpage = new Firstpage();
     TextView textview_detail_cityname, textview_detail_countryname, textview_detail_temperature,
             textview_detail_humidity, textview_detail_windspeed, textview_detail_visibility,
             textview_detail_max, textview_detail_min;

@@ -1,5 +1,6 @@
 package com.yujongu.weatherapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -153,8 +154,11 @@ public class Firstpage extends AppCompatActivity {
                     jsonData.setIcon(icon);
 
                     JSONObject jsonMain = response.getJSONObject("main");
-                    double temp = jsonMain.getDouble("temp");
-                    jsonData.setTemp(temp);
+                    double tempC = jsonMain.getDouble("temp");
+                    jsonData.setTempC(tempC);
+
+                    double tempF = (jsonMain.getDouble("temp")*9/5)+32;
+                    jsonData.setTempF(tempF);
 
                     int humidity = jsonMain.getInt("humidity");
                     jsonData.setHumidity(humidity);
@@ -168,8 +172,8 @@ public class Firstpage extends AppCompatActivity {
 
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
-
-                    Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTemp(), jsonData.getCountry(),
+                    
+                    Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTempC(), jsonData.getTempF(), jsonData.getCountry(),
                             jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin(), jsonData.getLat(), jsonData.getLon());
                     data.setInputCityName(inputName);
 
@@ -231,6 +235,7 @@ public class Firstpage extends AppCompatActivity {
                         }
                     }
                     break;
+
             }
         }
     };

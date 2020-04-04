@@ -4,7 +4,8 @@ public class JsonObjectData {
     String main;
     String description;
     String icon;
-    double temp;
+    double tempC;
+    double tempF;
     String name;
     String country;
     int humidity;
@@ -73,12 +74,20 @@ public class JsonObjectData {
         this.icon = icon;
     }
 
-    public double getTemp() {
-        return temp;
+    public double getTempC() {
+        return tempC;
     }
 
-    public void setTemp(double temp) {
-        this.temp = temp;
+    public void setTempC(double tempC) {
+        this.tempC = tempC;
+    }
+
+    public double getTempF() {
+        return tempF;
+    }
+
+    public void setTempF(double tempF) {
+        this.tempF = tempF;
     }
 
     public String getName() {

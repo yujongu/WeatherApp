@@ -46,6 +46,37 @@
                     android:src="@drawable/add"
                     android:id="@+id/imagebutton_add"/>
 
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:textSize="30sp"
+                    android:text="°C"
+                    android:gravity="center"
+                    android:id="@+id/button_c"
+                    android:fontFamily="@font/cultivemono_regular"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="/"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/cultivemono_regular"
+                    android:layout_marginLeft="10dp"/>
+
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:text="°F"
+                    android:gravity="center"
+                    android:id="@+id/button_f"
+                    android:fontFamily="@font/cultivemono_regular"/>
+
             </LinearLayout>
 
         </LinearLayout>
