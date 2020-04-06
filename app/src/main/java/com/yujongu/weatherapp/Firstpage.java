@@ -3,6 +3,7 @@ package com.yujongu.weatherapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -106,6 +107,8 @@ public class Firstpage extends AppCompatActivity {
         binding.recyclerviewFirstpage.setLayoutManager(mLinearLayoutManager);
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
+        binding.buttonC.setOnClickListener(onClickListener);
+        binding.buttonF.setOnClickListener(onClickListener);
 
         if (!nSaveList.isEmpty()){
             int ind = 0;
@@ -224,9 +227,7 @@ public class Firstpage extends AppCompatActivity {
                     } else {
                         if (!searchedCity.equals("")){
 
-//                            sentJsonRequest(searchedCity, -1);
                             sentJsonRequest(searchedCity, searchedLatLng, -1);
-
                             searchedCity = "";
                             searchedLatLng = null;
                             autocompleteFragment.setText("");
@@ -234,6 +235,18 @@ public class Firstpage extends AppCompatActivity {
                             Toast.makeText(Firstpage.this, "Please search a city name", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    break;
+                case R.id.button_c:
+                    binding.buttonC.setBackgroundColor(getColor(R.color.colorPrimaryDark));
+                    binding.buttonF.setBackgroundColor(Color.TRANSPARENT);
+                    mAdapter.celcius = true;
+                    mAdapter.notifyDataSetChanged();
+                    break;
+                case R.id.button_f:
+                    binding.buttonC.setBackgroundColor(Color.TRANSPARENT);
+                    binding.buttonF.setBackgroundColor(getColor(R.color.colorPrimaryDark));
+                    mAdapter.celcius = false;
+                    mAdapter.notifyDataSetChanged();
                     break;
 
             }
@@ -270,6 +283,7 @@ public class Firstpage extends AppCompatActivity {
         if (json != null){
             try {
                 JSONArray jsonArray = new JSONArray(json);
+                Log.i(TAG, json);
                 for (int i = 0; i < jsonArray.length(); i+=2){
                     String[] latlong =  jsonArray.get(i + 1).toString().split(",");
                     latlong[0] = latlong[0].replace("lat/lng: (", "");
@@ -279,7 +293,6 @@ public class Firstpage extends AppCompatActivity {
                     double longitude = Double.parseDouble(latlong[1]);
                     LatLng hold = new LatLng(latitude, longitude);
                     nameList.put((String) jsonArray.get(i), hold);
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

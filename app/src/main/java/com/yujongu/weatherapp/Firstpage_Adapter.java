@@ -25,6 +25,7 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
     private ArrayList<Firstpage_Data> firstpage_dataArrayList;
 
     int presentInt = -1;
+    boolean celcius = true;
 
 
     public class CustomViewHolder extends RecyclerView.ViewHolder{
@@ -88,9 +89,14 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
 
         viewholder.textview_temperature.setGravity(Gravity.CENTER);
 
-        viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTemperature()));
+        if (celcius){
+            viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTemperatureC()));
+            viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperatureC()));
+        } else {
+            viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTextview_temperatureF()));
+            viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTextview_temperatureF()));
+        }
 
-        viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperature()));
 
         viewholder.textview_temperature.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 
