@@ -105,6 +105,8 @@ public class Firstpage extends AppCompatActivity {
     private void eventListeners(){
         binding.recyclerviewFirstpage.setLayoutManager(mLinearLayoutManager);
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
+        binding.buttonC.setOnClickListener(onClickListener);
+        binding.buttonF.setOnClickListener(onClickListener);
         binding.recyclerviewFirstpage.setAdapter(mAdapter);
 
         if (!nSaveList.isEmpty()){
@@ -172,7 +174,7 @@ public class Firstpage extends AppCompatActivity {
 
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
-                    
+
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTempC(), jsonData.getTempF(), jsonData.getCountry(),
                             jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin(), jsonData.getLat(), jsonData.getLon());
                     data.setInputCityName(inputName);
@@ -235,6 +237,7 @@ public class Firstpage extends AppCompatActivity {
                         }
                     }
                     break;
+                case R.id.button_f:
 
             }
         }

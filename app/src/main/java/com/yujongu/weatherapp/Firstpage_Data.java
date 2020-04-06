@@ -15,6 +15,7 @@ public class Firstpage_Data {
     private String inputCityName;
     private double latitude;
     private double longitude;
+    private boolean scale;
 
 
     public double getLatitude() {
