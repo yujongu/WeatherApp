@@ -63,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
         textview_detail_countryname.setText(countryname);
 
         temperature = intent.getStringExtra("temperature");
-        textview_detail_temperature.setText(temperature + "°C");
+        textview_detail_temperature.setText(temperature + "°");
 
         main = intent.getStringExtra("main");
         if(main.equals("Clouds")){
@@ -83,10 +83,10 @@ public class DetailsActivity extends AppCompatActivity {
         textview_detail_windspeed.setText(windspeed + "m/s");
 
         max = intent.getStringExtra("temp_max");
-        textview_detail_max.setText(max+ "°C");
+        textview_detail_max.setText(max+ "°");
 
         min = intent.getStringExtra("temp_min");
-        textview_detail_min.setText(min+ "°C");
+        textview_detail_min.setText(min+ "°");
     }
 
     public boolean onTouchEvent (MotionEvent touchEvent){

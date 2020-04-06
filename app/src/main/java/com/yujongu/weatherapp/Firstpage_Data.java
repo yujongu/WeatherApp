@@ -1,5 +1,7 @@
 package com.yujongu.weatherapp;
 
+import static java.lang.Math.round;
+
 public class Firstpage_Data {
 
     private String imageview_weather;
@@ -16,6 +18,7 @@ public class Firstpage_Data {
     private double latitude;
     private double longitude;
     private boolean scale;
+
 
 
     public double getLatitude() {

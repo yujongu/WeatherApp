@@ -35,7 +35,6 @@
         android:text="temp"
         android:textSize="40sp"
         android:layout_toLeftOf="@id/c"
-        android:layout_marginRight="10dp"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@android:color/black"
@@ -44,7 +43,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="°C "
+        android:text="° "
         android:textSize="30sp"
         android:gravity="center"
         android:layout_centerInParent="true"

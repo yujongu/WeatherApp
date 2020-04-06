@@ -50,9 +50,9 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:background="@null"
                     android:textSize="30sp"
                     android:text="°C"
+                    android:background="@null"
                     android:gravity="center"
                     android:id="@+id/button_c"
                     android:fontFamily="@font/cultivemono_regular"/>
@@ -72,6 +72,7 @@
                     android:textSize="30sp"
                     android:layout_gravity="center"
                     android:background="@null"
+                    android:textColor="@color/colorPrimaryDark"
                     android:text="°F"
                     android:gravity="center"
                     android:id="@+id/button_f"

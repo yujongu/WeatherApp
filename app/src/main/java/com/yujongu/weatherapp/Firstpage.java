@@ -3,6 +3,7 @@ package com.yujongu.weatherapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -105,9 +106,9 @@ public class Firstpage extends AppCompatActivity {
     private void eventListeners(){
         binding.recyclerviewFirstpage.setLayoutManager(mLinearLayoutManager);
         binding.imagebuttonAdd.setOnClickListener(onClickListener);
+        binding.recyclerviewFirstpage.setAdapter(mAdapter);
         binding.buttonC.setOnClickListener(onClickListener);
         binding.buttonF.setOnClickListener(onClickListener);
-        binding.recyclerviewFirstpage.setAdapter(mAdapter);
 
         if (!nSaveList.isEmpty()){
             int ind = 0;
@@ -156,10 +157,10 @@ public class Firstpage extends AppCompatActivity {
                     jsonData.setIcon(icon);
 
                     JSONObject jsonMain = response.getJSONObject("main");
-                    double tempC = jsonMain.getDouble("temp");
+                    double tempC = Double.parseDouble(String.format("%.1f",jsonMain.getDouble("temp")));
                     jsonData.setTempC(tempC);
 
-                    double tempF = (jsonMain.getDouble("temp")*9/5)+32;
+                    double tempF = Double.parseDouble(String.format("%.1f",((jsonMain.getDouble("temp")*9/5)+32)));
                     jsonData.setTempF(tempF);
 
                     int humidity = jsonMain.getInt("humidity");
@@ -174,7 +175,7 @@ public class Firstpage extends AppCompatActivity {
 
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
-
+                    
                     Firstpage_Data data = new Firstpage_Data(jsonData.getIcon(), jsonData.getName(), jsonData.getTempC(), jsonData.getTempF(), jsonData.getCountry(),
                             jsonData.getMain(), jsonData.getHumidity(), jsonData.getWindspeed(), jsonData.getMax(), jsonData.getMin(), jsonData.getLat(), jsonData.getLon());
                     data.setInputCityName(inputName);
@@ -226,9 +227,7 @@ public class Firstpage extends AppCompatActivity {
                     } else {
                         if (!searchedCity.equals("")){
 
-//                            sentJsonRequest(searchedCity, -1);
                             sentJsonRequest(searchedCity, searchedLatLng, -1);
-
                             searchedCity = "";
                             searchedLatLng = null;
                             autocompleteFragment.setText("");
@@ -237,7 +236,18 @@ public class Firstpage extends AppCompatActivity {
                         }
                     }
                     break;
+                case R.id.button_c:
+                    binding.buttonF.setTextColor(getColor(R.color.colorPrimaryDark));
+                    binding.buttonC.setTextColor(getColor(R.color.colorAccent));
+                    mAdapter.celcius = true;
+                    mAdapter.notifyDataSetChanged();
+                    break;
                 case R.id.button_f:
+                    binding.buttonF.setTextColor(getColor(R.color.colorAccent));
+                    binding.buttonC.setTextColor(getColor(R.color.colorPrimaryDark));
+                    mAdapter.celcius = false;
+                    mAdapter.notifyDataSetChanged();
+                    break;
 
             }
         }
@@ -273,6 +283,7 @@ public class Firstpage extends AppCompatActivity {
         if (json != null){
             try {
                 JSONArray jsonArray = new JSONArray(json);
+                Log.i(TAG, json);
                 for (int i = 0; i < jsonArray.length(); i+=2){
                     String[] latlong =  jsonArray.get(i + 1).toString().split(",");
                     latlong[0] = latlong[0].replace("lat/lng: (", "");
@@ -282,7 +293,6 @@ public class Firstpage extends AppCompatActivity {
                     double longitude = Double.parseDouble(latlong[1]);
                     LatLng hold = new LatLng(latitude, longitude);
                     nameList.put((String) jsonArray.get(i), hold);
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -64,7 +64,7 @@
         android:layout_marginTop="201dp"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/cultivemono_regular"
-        android:text="36.22C"
+        android:text="36.22"
         android:textColor="@color/quantum_black_100"
         android:textSize="50sp" />
 
