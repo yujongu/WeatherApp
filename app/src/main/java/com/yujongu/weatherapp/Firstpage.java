@@ -255,12 +255,12 @@ public class Firstpage extends AppCompatActivity {
                     break;
                 case R.id.button_c:
                     binding.buttonF.setTextColor(getColor(R.color.colorPrimaryDark));
-                    binding.buttonC.setTextColor(getColor(R.color.colorAccent));
+                    binding.buttonC.setTextColor(Color.BLACK);
                     mAdapter.celcius = true;
                     mAdapter.notifyDataSetChanged();
                     break;
                 case R.id.button_f:
-                    binding.buttonF.setTextColor(getColor(R.color.colorAccent));
+                    binding.buttonF.setTextColor(Color.BLACK);
                     binding.buttonC.setTextColor(getColor(R.color.colorPrimaryDark));
                     mAdapter.celcius = false;
                     mAdapter.notifyDataSetChanged();
