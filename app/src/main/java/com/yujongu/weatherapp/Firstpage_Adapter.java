@@ -98,8 +98,9 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         } else {
             viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTextview_temperatureF()));
             viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTextview_temperatureF()));
-            viewholder.textview_max.setText(String.valueOf((firstpage_dataArrayList.get(position).getMax() * 9 / 5) + 32));
-            viewholder.textview_min.setText(String.valueOf((firstpage_dataArrayList.get(position).getMin() * 9 / 5) + 32));
+
+            viewholder.textview_max.setText(String.format("%.2f",(firstpage_dataArrayList.get(position).getMax() * 9 / 5) + 32));
+            viewholder.textview_min.setText(String.format("%.2f",(firstpage_dataArrayList.get(position).getMin() * 9 / 5) + 32));
         }
 
 
