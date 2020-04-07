@@ -89,7 +89,7 @@ public class Firstpage extends AppCompatActivity {
         rq = Volley.newRequestQueue(this);
 
         if (!Places.isInitialized()){
-            Places.initialize(getApplicationContext(), OpenWeatherAppKey.GOOGLE_PLACES_APP_KEY);
+            Places.initialize(getApplicationContext(), BuildConfig.GOOGLE_PLACES_APP_KEY);
         }
 
         PlacesClient placesClient = Places.createClient(this);
@@ -138,7 +138,7 @@ public class Firstpage extends AppCompatActivity {
 
     public void sentJsonRequest(final String inputName, final LatLng latLng, final int index){
         String url = "http://api.openweathermap.org/data/2.5/weather?"
-                + "appid=" + OpenWeatherAppKey.OPEN_WEATHER_APP_KEY
+                + "appid=" + BuildConfig.OPEN_WEATHER_APP_KEY
                 + "&lat=" + latLng.latitude
                 + "&lon=" + latLng.longitude
                 + "&units=metric";
@@ -173,10 +173,10 @@ public class Firstpage extends AppCompatActivity {
                     jsonData.setIcon(icon);
 
                     JSONObject jsonMain = response.getJSONObject("main");
-                    double tempC = Double.parseDouble(String.format("%.1f",jsonMain.getDouble("temp")));
+                    double tempC = Double.parseDouble(String.format("%.2f",jsonMain.getDouble("temp")));
                     jsonData.setTempC(tempC);
 
-                    double tempF = Double.parseDouble(String.format("%.1f",((jsonMain.getDouble("temp")*9/5)+32)));
+                    double tempF = Double.parseDouble(String.format("%.2f",((jsonMain.getDouble("temp")*9/5)+32)));
                     jsonData.setTempF(tempF);
 
                     int humidity = jsonMain.getInt("humidity");
