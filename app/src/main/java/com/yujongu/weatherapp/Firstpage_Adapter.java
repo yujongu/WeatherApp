@@ -92,9 +92,14 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         if (celcius){
             viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTemperatureC()));
             viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTemperatureC()));
+            viewholder.textview_max.setText(String.valueOf(firstpage_dataArrayList.get(position).getMax()));
+            viewholder.textview_min.setText(String.valueOf(firstpage_dataArrayList.get(position).getMin()));
+
         } else {
             viewholder.textview_temperature.setText(String.valueOf((int)firstpage_dataArrayList.get(position).getTextview_temperatureF()));
             viewholder.textview_doubletemp.setText(String.valueOf(firstpage_dataArrayList.get(position).getTextview_temperatureF()));
+            viewholder.textview_max.setText(String.valueOf((firstpage_dataArrayList.get(position).getMax() * 9 / 5) + 32));
+            viewholder.textview_min.setText(String.valueOf((firstpage_dataArrayList.get(position).getMin() * 9 / 5) + 32));
         }
 
 
@@ -109,10 +114,6 @@ public class Firstpage_Adapter extends RecyclerView.Adapter<Firstpage_Adapter.Cu
         viewholder.textview_humidity.setText(String.valueOf(firstpage_dataArrayList.get(position).getHumidity()));
 
         viewholder.textview_windspeed.setText(String.valueOf(firstpage_dataArrayList.get(position).getWindspeed()));
-
-        viewholder.textview_max.setText(String.valueOf(firstpage_dataArrayList.get(position).getMax()));
-
-        viewholder.textview_min.setText(String.valueOf(firstpage_dataArrayList.get(position).getMin()));
 
         if (position == presentInt){
             System.out.println(presentInt);

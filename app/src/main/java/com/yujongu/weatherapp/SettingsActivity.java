@@ -13,7 +13,6 @@ import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
-import androidx.preference.PreferenceFragment;
 
 public class SettingsActivity extends PreferenceActivity {
     @Override

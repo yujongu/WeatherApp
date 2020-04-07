@@ -24,6 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -78,6 +82,8 @@ public class Firstpage extends AppCompatActivity {
 
 
     private void initInstances(){
+        putAds();
+
         pref = getSharedPreferences("pref", MODE_PRIVATE);
 
         rq = Volley.newRequestQueue(this);
@@ -117,6 +123,16 @@ public class Firstpage extends AppCompatActivity {
                 ind++;
             }
         }
+    }
+
+    private void putAds(){
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
     }
 
 
@@ -172,6 +188,7 @@ public class Firstpage extends AppCompatActivity {
 
                     double max = jsonMain.getDouble("temp_max");
                     jsonData.setMax(max);
+
 
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
