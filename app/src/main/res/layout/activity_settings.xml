@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
-    tools:context = ".SettingsActivity">
+    tools:context = ".SettingsActivity"
+    android:layout_margin="16dp"
+    android:id="@+id/settings_holder">
 
-</LinearLayout>
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:layout_weight="1"
+        android:id="@+id/imagebutton_back"
+        android:padding="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

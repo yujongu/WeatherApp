@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    android:weightSum="30"
+    >
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/back"
+        android:background="@null"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:layout_weight="1"
+        android:id="@+id/imagebutton_menu"
+        android:padding="10dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CityName"
+        android:textAlignment="center"
+        android:textColor="@color/quantum_black_100"
+        android:textSize="50sp"
+        android:fontFamily="@font/cultivemono_regular"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imagebutton_menu"
+        android:layout_marginTop="40dp"
+        android:id="@+id/textview_detail_cityname"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CountryName"
+        android:textSize="23sp"
+        android:fontFamily="@font/cultivemono_regular"
+        android:layout_below="@+id/textview_detail_cityname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/textview_detail_countryname"/>
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/textview_detail_countryname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/add"
+        android:id="@+id/imageview_detail_weather"/>
+
+    <TextView
+        android:id="@+id/textview_detail_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_detail_countryname"
+        android:layout_marginTop="201dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/cultivemono_regular"
+        android:text="36.22"
+        android:textColor="@color/quantum_black_100"
+        android:textSize="50sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:layout_below="@+id/textview_detail_temperature"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/max"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="maximum"
+                android:id="@+id/textview_detail_max"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/min"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="minimum"
+                android:id="@+id/textview_detail_min"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/windspeed"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="windspeed"
+                android:id="@+id/textview_detail_windspeed"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/humidity"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="humidity"
+                android:id="@+id/textview_detail_humidity"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

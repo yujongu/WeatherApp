@@ -4,11 +4,50 @@ public class JsonObjectData {
     String main;
     String description;
     String icon;
-    double temp;
+    double tempC;
+    double tempF;
     String name;
     String country;
+    int humidity;
+    double windspeed;
+    double max;
+    double min;
+    double lat;
+    double lon;
+
+    public double getMax() {
+        return max;
+    }
+
+    public void setMax(double max) {
+        this.max = max;
+    }
+
+    public double getMin() {
+        return min;
+    }
+
+    public void setMin(double min) {
+        this.min = min;
+    }
 
     public JsonObjectData() {
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
+    }
+
+    public double getWindspeed() {
+        return windspeed;
+    }
+
+    public void setWindspeed(double windspeed) {
+        this.windspeed = windspeed;
     }
 
     public String getMain() {
@@ -35,12 +74,20 @@ public class JsonObjectData {
         this.icon = icon;
     }
 
-    public double getTemp() {
-        return temp;
+    public double getTempC() {
+        return tempC;
     }
 
-    public void setTemp(double temp) {
-        this.temp = temp;
+    public void setTempC(double tempC) {
+        this.tempC = tempC;
+    }
+
+    public double getTempF() {
+        return tempF;
+    }
+
+    public void setTempF(double tempF) {
+        this.tempF = tempF;
     }
 
     public String getName() {
@@ -57,5 +104,21 @@ public class JsonObjectData {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 }

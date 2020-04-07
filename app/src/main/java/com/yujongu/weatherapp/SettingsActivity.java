@@ -1,14 +1,24 @@
 package com.yujongu.weatherapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.preference.RingtonePreference;
+import android.text.TextUtils;
 
-public class SettingsActivity extends AppCompatActivity {
+import androidx.annotation.Nullable;
 
+public class SettingsActivity extends PreferenceActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+
     }
+
 }
