@@ -95,6 +95,9 @@ public class Firstpage extends AppCompatActivity {
         mLinearLayoutManager = new LinearLayoutManager(this);
 
         nSaveList = loadData();
+        for (Map.Entry entry : nSaveList.entrySet()){
+            Log.i(TAG, entry.getKey() + " " + entry.getValue());
+        }
 
         mArrayList = new ArrayList<>();
 
@@ -115,6 +118,14 @@ public class Firstpage extends AppCompatActivity {
         binding.buttonC.setOnClickListener(onClickListener);
         binding.buttonF.setOnClickListener(onClickListener);
 
+        mAdapter.celcius = pref.getBoolean("tempUnit", true);
+        if (mAdapter.celcius){
+            binding.buttonF.setTextColor(getColor(R.color.colorPrimaryDark));
+            binding.buttonC.setTextColor(Color.BLACK);
+        } else {
+            binding.buttonF.setTextColor(Color.BLACK);
+            binding.buttonC.setTextColor(getColor(R.color.colorPrimaryDark));
+        }
         if (!nSaveList.isEmpty()){
             int ind = 0;
             for (Map.Entry<String, LatLng> entry : nSaveList.entrySet()){
@@ -188,7 +199,6 @@ public class Firstpage extends AppCompatActivity {
                     double max = jsonMain.getDouble("temp_max");
                     jsonData.setMax(max);
 
-
                     double min = jsonMain.getDouble("temp_min");
                     jsonData.setMin(min);
                     
@@ -233,6 +243,7 @@ public class Firstpage extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.imagebutton_add:
                     int index = isPresent(searchedCity);
+                    Log.i(TAG, index + "");
                     if (index != -1){
                         mAdapter.presentInt = index;
                         mAdapter.notifyDataSetChanged();
@@ -257,12 +268,18 @@ public class Firstpage extends AppCompatActivity {
                     binding.buttonC.setTextColor(Color.BLACK);
                     mAdapter.celcius = true;
                     mAdapter.notifyDataSetChanged();
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean("tempUnit", true);
+                    editor.apply();
                     break;
                 case R.id.button_f:
                     binding.buttonF.setTextColor(Color.BLACK);
                     binding.buttonC.setTextColor(getColor(R.color.colorPrimaryDark));
                     mAdapter.celcius = false;
                     mAdapter.notifyDataSetChanged();
+                    editor = pref.edit();
+                    editor.putBoolean("tempUnit", false);
+                    editor.apply();
                     break;
 
             }
@@ -271,7 +288,7 @@ public class Firstpage extends AppCompatActivity {
 
     private int isPresent(String city){
         for (int i = 0; i < mArrayList.size(); i++){
-            if (mArrayList.get(i).getCity().equals(city)){
+            if (mArrayList.get(i).getInputCityName().equals(city)){
                 return i;
             }
         }
@@ -299,7 +316,6 @@ public class Firstpage extends AppCompatActivity {
         if (json != null){
             try {
                 JSONArray jsonArray = new JSONArray(json);
-                Log.i(TAG, json);
                 for (int i = 0; i < jsonArray.length(); i+=2){
                     String[] latlong =  jsonArray.get(i + 1).toString().split(",");
                     latlong[0] = latlong[0].replace("lat/lng: (", "");
